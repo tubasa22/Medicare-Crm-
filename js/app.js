@@ -47,7 +47,7 @@ function demoMode() {
 
 async function loadClientsData() {
   try {
-    const url = 'https://script.google.com/macros/d/AKfycbwIvJYqoMt9M7--jdwYytROTIMJmZTlnl7o88ZCEeJQbHcbtWtRRPk65TJL-3o61lbTQA/usercontent?action=getClients';
+    const url = 'https://script.google.com/macros/d/AKfycbxZbXxHcr1Gy7lYso9u9ibXxSv2GGUK6bMr9J8l3OJORep4TpJeRkTdXUOkUYgA0W3c9w/usercontent?action=getClients';
     
     const response = await fetch(url);
     const data = await response.json();
@@ -64,7 +64,6 @@ async function loadClientsData() {
     alert('데이터 로드 실패: ' + err.message);
   }
 }
-
 function renderClientsTable(clients) {
   const tbody = document.getElementById('clientTable');
   if (!tbody) return;
