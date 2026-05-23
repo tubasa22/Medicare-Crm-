@@ -47,7 +47,7 @@ function demoMode() {
 
 async function loadClientsData() {
   try {
-    const url = 'https://script.google.com/macros/d/AKfycbxZbXxHcr1Gy7lYso9u9ibXxSv2GGUK6bMr9J8l3OJORep4TpJeRkTdXUOkUYgA0W3c9w/usercontent?action=getClients';
+   const url = 'https://script.google.com/macros/d/AKfycbwgeemOwnUD4XGioeI6wWoXsMdH_17z9VReQn8As3nZ5flkHXQCy-MI6Vlx5p9dpmJdIg/usercontent?action=getClients';
     
     const response = await fetch(url);
     const data = await response.json();
