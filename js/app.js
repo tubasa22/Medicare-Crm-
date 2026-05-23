@@ -627,8 +627,35 @@ function clearNotifs() {
 // ============ 전역 함수들 (HTML onclick에서 호출) ============
 
 function signInClick() {
-  console.log('Google 로그인 클릭');
-  alert('Google 로그인 기능은 준비 중입니다.');
+  google.accounts.id.initialize({
+    client_id: '1064406898241-m6s99ikhrjivp1b4lk77ukfrpurldgo7.apps.googleusercontent.com',
+    callback: handleCredentialResponse
+  });
+  
+  google.accounts.id.renderButton(
+    document.getElementById('signInBtn'),
+    { theme: 'outline', size: 'large' }
+  );
+  
+  google.accounts.id.prompt();
+}
+
+function handleCredentialResponse(response) {
+  console.log('로그인 성공:', response);
+  const token = response.credential;
+  
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+  
+  const userData = JSON.parse(jsonPayload);
+  console.log('사용자:', userData);
+  
+  alert('로그인 성공: ' + userData.name);
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
 }
 
 function demoMode() {
