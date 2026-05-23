@@ -529,3 +529,97 @@ async function saveNewClient() {
 }
 
 // 유사하게 editClient(), deleteClient() 등을 구현...
+// 전역 함수들 (HTML onclick에서 호출)
+function signInClick() {
+  console.log('Google 로그인 클릭');
+  // 실제 Google 로그인은 나중에 구현
+  alert('Google 로그인 기능은 준비 중입니다.');
+}
+
+function demoMode() {
+  console.log('데모 모드 시작');
+  alert('데모 모드는 준비 중입니다.');
+}
+
+function showPanel(panelId) {
+  // 모든 패널 숨기기
+  document.getElementById('lp_main').style.display = 'none';
+  document.getElementById('lp_apply').style.display = 'none';
+  document.getElementById('lp_applied').style.display = 'none';
+  
+  // 선택된 패널 보기
+  document.getElementById(panelId).style.display = 'block';
+}
+
+function submitApply() {
+  const name = document.getElementById('ap_name').value;
+  const email = document.getElementById('ap_email').value;
+  
+  if (!name || !email) {
+    alert('이름과 이메일을 입력하세요.');
+    return;
+  }
+  
+  document.getElementById('ap_name_confirm').textContent = name;
+  document.getElementById('ap_email_confirm').textContent = email;
+  showPanel('lp_applied');
+}
+
+function signOut() {
+  console.log('로그아웃');
+  location.reload();
+}
+
+function showTab(tabName, element) {
+  // 모든 페이지 숨기기
+  document.querySelectorAll('.pg').forEach(el => el.classList.remove('on'));
+  // 모든 탭 비활성화
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('on'));
+  
+  // 선택된 것만 활성화
+  document.getElementById('pg-' + tabName).classList.add('on');
+  element.classList.add('on');
+}
+
+function openAddClientModal() {
+  document.getElementById('addClientModal').classList.add('on');
+}
+
+function closeModal(modalId) {
+  document.getElementById(modalId).classList.remove('on');
+}
+
+function saveClient(event) {
+  event.preventDefault();
+  alert('고객 추가 기능은 준비 중입니다.');
+  closeModal('addClientModal');
+}
+
+function filterClients() {
+  console.log('고객 필터링');
+}
+
+function loadAll() {
+  console.log('데이터 새로고침');
+}
+
+function openFeedback() {
+  alert('피드백 기능은 준비 중입니다.');
+}
+
+function globalSearchFn() {
+  console.log('전역 검색');
+}
+
+function closeGlobalSearch() {
+  document.getElementById('gsResults').classList.remove('on');
+}
+
+function toggleNotif() {
+  const panel = document.getElementById('notifPanel');
+  panel.classList.toggle('on');
+}
+
+function clearNotifs() {
+  console.log('알림 모두 읽음');
+}
