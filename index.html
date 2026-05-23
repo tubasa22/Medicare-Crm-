@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinCRM — 보험 에이전트</title>
+
+<!-- CSS 파일 로드 -->
+<link rel="stylesheet" href="css/css_variables.css">
+<link rel="stylesheet" href="css/css_layout.css">
+<link rel="stylesheet" href="css/css_components.css">
+</head>
+<body>
+
+<!-- ============================================================
+     LOGIN SCREEN - 로그인 화면
+     ============================================================ -->
+<div id="loginScreen">
+  <div class="lbox">
+    <div class="llogo">🏦 FinCRM</div>
+    <p class="lsub">한인 보험 에이전트 전용 고객관리 시스템</p>
+
+    <!-- 패널 A: 초기 선택 -->
+    <div id="lp_main">
+      <button class="google-btn" style="background:linear-gradient(135deg,#1a56db,#7c3aed);color:#fff;border:none;margin-bottom:10px" onclick="showPanel('lp_apply')">
+        📝 정식 사용 신청하기
+      </button>
+      <button class="demo-btn" onclick="demoMode()">📋 데모 모드로 체험하기 (신청 불필요)</button>
+      
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--g3)">
+        <div style="font-size:12px;color:var(--text2);margin-bottom:10px;text-align:center">이미 등록된 사용자</div>
+        <button class="google-btn" id="signInBtn" onclick="signInClick()" style="margin-bottom:0">
+          <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          <span id="signInBtnTxt">Google 계정으로 로그인</span>
+        </button>
+      </div>
+      
+      <p class="login-note" style="margin-top:14px">베타 기간 중 무료 · LA·OC·SB·Riverside 지역 에이전트 대상</p>
+    </div>
+
+    <!-- 패널 B: 사용 신청 (정보 입력) -->
+    <div id="lp_apply" style="display:none">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+        <button onclick="showPanel('lp_main')" style="border:none;background:none;cursor:pointer;font-size:18px;color:var(--text3)">←</button>
+        <span style="font-size:15px;font-weight:700">📝 사용 신청</span>
+      </div>
+      <div style="background:var(--blue2);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--blue);margin-bottom:14px;line-height:1.7">
+        📧 신청 후 입력하신 이메일로 Google 앱에 등록해드립니다
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px">이름 *</label>
+          <input id="ap_name" placeholder="홍길동" style="width:100%;border:1px solid var(--g3);border-radius:8px;padding:10px 12px;font-size:14px;outline:none;font-family:inherit">
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px">Google 로그인 이메일 *</label>
+          <input id="ap_email" type="email" placeholder="your-email@gmail.com" style="width:100%;border:1px solid var(--g3);border-radius:8px;padding:10px 12px;font-size:14px;outline:none;font-family:inherit">
+        </div>
+      </div>
+      <button onclick="submitApply()" style="width:100%;padding:13px;background:linear-gradient(135deg,#1a56db,#7c3aed);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer">신청하기 →</button>
+    </div>
+
+    <!-- 패널 C: 신청 완료 대기 -->
+    <div id="lp_applied" style="display:none;text-align:center">
+      <div style="font-size:48px;margin-bottom:12px">✅</div>
+      <div style="font-size:17px;font-weight:700;margin-bottom:8px">신청 완료!</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:16px">
+        <strong id="ap_name_confirm"></strong>님의 신청이 접수되었습니다.
+      </div>
+      <button onclick="showPanel('lp_main')" style="width:100%;padding:12px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer">
+        ← 메인으로 돌아가기
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     APP MAIN - 메인 앱
+     ============================================================ -->
+<div id="app">
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="logo">🏦 FinCRM</div>
+    
+    <button class="tab on" data-page="dashboard" onclick="showTab('dashboard',this)">📊 대시보드</button>
+    <button class="tab" data-page="clients" onclick="showTab('clients',this)">👥 고객 목록</button>
+    <button class="tab" data-page="schedule" onclick="showTab('schedule',this)">📅 연락일</button>
+    <button class="tab" data-page="followup" onclick="showTab('followup',this)">⚡ 팔로업</button>
+    
+    <div class="tr">
+      <div class="gsrch-wrap">
+        <span class="gsrch-icon">🔍</span>
+        <input class="gsrch" id="globalSearch" placeholder="고객 검색..." oninput="globalSearchFn()" onblur="setTimeout(()=>closeGlobalSearch(),200)">
+        <div class="gsrch-results" id="gsResults"></div>
+      </div>
+      <div class="notif-wrap">
+        <button class="notif-btn" onclick="toggleNotif()" title="알림">🔔<span class="notif-badge" id="notifBadge"></span></button>
+        <div class="notif-panel" id="notifPanel">
+          <div class="notif-head">알림 <button style="border:none;background:none;cursor:pointer;font-size:11px;color:var(--text3)" onclick="clearNotifs()">모두 읽음</button></div>
+          <div id="notifList"><div class="notif-empty">새 알림 없음</div></div>
+        </div>
+      </div>
+      <div class="pill ok" id="syncPill"><div class="dot ok"></div><span id="syncTxt">연결됨</span></div>
+      <div id="demoBanner" style="display:none;background:#fef3c7;border:1px solid #f59e0b;border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;color:#92400e;white-space:nowrap">
+        🎭 데모 모드 — 가상 데이터
+      </div>
+      <button class="btn sm" onclick="loadAll()" title="새로고침">🔄</button>
+      <button class="btn sm" onclick="openFeedback()" title="피드백 보내기" style="background:var(--green2);color:var(--green);border-color:var(--green)">💬 피드백</button>
+      <button class="btn sm" onclick="signOut()" title="로그아웃" style="background:var(--red2);color:var(--red);border-color:var(--red)">🚪 로그아웃</button>
+    </div>
+  </div>
+
+  <!-- PAGES -->
+
+  <!-- DASHBOARD -->
+  <div class="pg on" id="pg-dashboard">
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-l">👥 전체 고객</div><div class="kpi-v" id="kT">—</div></div>
+      <div class="kpi"><div class="kpi-l">📋 플랜 있음</div><div class="kpi-v" id="kP">—</div></div>
+      <div class="kpi"><div class="kpi-l">📞 장기 미연락 (30일↑)</div><div class="kpi-v" id="kC" style="color:var(--red)">—</div></div>
+      <div class="kpi"><div class="kpi-l">🔗 에이전트 리퍼</div><div class="kpi-v" id="kR">—</div></div>
+    </div>
+    <div style="background:var(--sur);border:1px solid var(--g3);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sh)">
+      <div style="font-size:15px;font-weight:700;margin-bottom:14px">📊 최근 활동</div>
+      <div id="dashboardChart" style="height:300px;display:flex;align-items:center;justify-content:center;color:var(--text3)">
+        차트 영역
+      </div>
+    </div>
+  </div>
+
+  <!-- CLIENTS LIST -->
+  <div class="pg" id="pg-clients">
+    <div class="sh">
+      <span class="st">👥 고객 목록</span>
+      <div class="sa">
+        <input class="srch" id="clientSearch" placeholder="고객명, 전화번호로 검색..." oninput="filterClients()">
+        <button class="btn pri" onclick="openAddClientModal()">➕ 고객 추가</button>
+      </div>
+    </div>
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>고객명</th>
+            <th>연락처</th>
+            <th>플랜</th>
+            <th>다음연락</th>
+            <th>액션</th>
+          </tr>
+        </thead>
+        <tbody id="clientTable">
+          <tr class="spin-row"><td colspan="5"><div class="spin"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <div class="pg" id="pg-schedule">
+    <div class="sh">
+      <span class="st">📅 연락 일정</span>
+    </div>
+    <div style="background:var(--sur);border:1px solid var(--g3);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sh)">
+      <div id="scheduleList" style="display:flex;flex-direction:column;gap:10px">
+        <div style="text-align:center;color:var(--text3);padding:20px">로드 중...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOLLOWUP -->
+  <div class="pg" id="pg-followup">
+    <div class="sh">
+      <span class="st">⚡ 팔로업 필요</span>
+    </div>
+    <div id="followupList" style="display:flex;flex-direction:column;gap:8px">
+      <div style="text-align:center;color:var(--text3);padding:20px">로드 중...</div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST NOTIFICATION -->
+<div id="toast"></div>
+
+<!-- MODALS -->
+
+<!-- 고객 추가 모달 -->
+<div class="ov" id="addClientModal">
+  <div class="modal">
+    <h3>➕ 새 고객 추가</h3>
+    <form style="display:flex;flex-direction:column;gap:12px" onsubmit="saveClient(event)">
+      <div class="fg">
+        <label>고객명 *</label>
+        <input type="text" id="clientName" placeholder="이름" required>
+      </div>
+      <div class="fg">
+        <label>연락처 *</label>
+        <input type="tel" id="clientPhone" placeholder="010-1234-5678" required>
+      </div>
+      <div class="fg">
+        <label>이메일</label>
+        <input type="email" id="clientEmail" placeholder="email@example.com">
+      </div>
+      <div class="fg">
+        <label>플랜</label>
+        <select id="clientPlan">
+          <option value="">선택</option>
+          <option value="Pro">Pro</option>
+          <option value="Basic">Basic</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>메모</label>
+        <textarea id="clientMemo" placeholder="메모 입력"></textarea>
+      </div>
+      <div class="mf">
+        <button type="button" class="btn" onclick="closeModal('addClientModal')">취소</button>
+        <button type="submit" class="btn pri">저장</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+<script src="js/api/appsScript.js"></script>
+<script src="js/services/clientService.js"></script>
+<script src="js/services/memoService.js"></script>
+<script src="js/services/followupService.js"></script>
+<script src="js/ui/renderer.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
