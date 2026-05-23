@@ -538,7 +538,11 @@ function signInClick() {
 
 function demoMode() {
   console.log('데모 모드 시작');
-  alert('데모 모드는 준비 중입니다.');
+  // 로그인 화면 숨기기
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  
+  alert('데모 모드로 진입했습니다.');
 }
 
 function showPanel(panelId) {
