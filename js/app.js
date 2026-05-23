@@ -623,3 +623,88 @@ function toggleNotif() {
 function clearNotifs() {
   console.log('알림 모두 읽음');
 }
+
+// ============ 전역 함수들 (HTML onclick에서 호출) ============
+
+function signInClick() {
+  console.log('Google 로그인 클릭');
+  alert('Google 로그인 기능은 준비 중입니다.');
+}
+
+function demoMode() {
+  console.log('데모 모드 시작');
+  alert('데모 모드는 준비 중입니다.');
+}
+
+function showPanel(panelId) {
+  document.getElementById('lp_main').style.display = 'none';
+  document.getElementById('lp_apply').style.display = 'none';
+  document.getElementById('lp_applied').style.display = 'none';
+  document.getElementById(panelId).style.display = 'block';
+}
+
+function submitApply() {
+  const name = document.getElementById('ap_name').value;
+  const email = document.getElementById('ap_email').value;
+  if (!name || !email) {
+    alert('이름과 이메일을 입력하세요.');
+    return;
+  }
+  document.getElementById('ap_name_confirm').textContent = name;
+  showPanel('lp_applied');
+}
+
+function signOut() {
+  location.reload();
+}
+
+function showTab(tabName, element) {
+  document.querySelectorAll('.pg').forEach(el => el.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('on'));
+  document.getElementById('pg-' + tabName).classList.add('on');
+  element.classList.add('on');
+}
+
+function openAddClientModal() {
+  document.getElementById('addClientModal').classList.add('on');
+}
+
+function closeModal(modalId) {
+  document.getElementById(modalId).classList.remove('on');
+}
+
+function saveClient(event) {
+  event.preventDefault();
+  alert('고객 추가 기능은 준비 중입니다.');
+  closeModal('addClientModal');
+}
+
+function filterClients() {
+  console.log('고객 필터링');
+}
+
+function loadAll() {
+  console.log('데이터 새로고침');
+}
+
+function openFeedback() {
+  alert('피드백 기능은 준비 중입니다.');
+}
+
+function globalSearchFn() {
+  console.log('전역 검색');
+}
+
+function closeGlobalSearch() {
+  const el = document.getElementById('gsResults');
+  if (el) el.style.display = 'none';
+}
+
+function toggleNotif() {
+  const panel = document.getElementById('notifPanel');
+  if (panel) panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+}
+
+function clearNotifs() {
+  console.log('알림 모두 읽음');
+}
